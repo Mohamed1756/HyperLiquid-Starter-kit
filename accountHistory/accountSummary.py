@@ -8,9 +8,10 @@ from datetime import datetime
 load_dotenv() 
 
 # Set the date to extract pnl records
-date = datetime(2024, 1, 8) 
+start_date = datetime(2024,1,1) 
+end_date = datetime.now()
 
-def retrieve_user_fills(wallet_address, date):
+def retrieve_user_fills(wallet_address, start_date, end_date):
 
   url = 'https://api.hyperliquid.xyz/info'
 
@@ -31,9 +32,11 @@ def retrieve_user_fills(wallet_address, date):
     
     df = pd.DataFrame(data)
 
-    # Filter to only include fills for the specified date
-    df['time'] = pd.to_datetime(df['time'], unit='ms') 
-    df = df[df['time'].dt.date == date.date()]
+    # Convert time column to datetime
+    df['time'] = pd.to_datetime(df['time'], unit='ms')
+
+    # Filter fills within the specified date range
+    df = df[(df['time'] >= start_date) & (df['time'] <= end_date)]
 
     df = df.drop(columns=['crossed','startPosition','tid','side','oid','liquidationMarkPx','hash'])
 
@@ -51,4 +54,4 @@ def retrieve_user_fills(wallet_address, date):
 
 # input wallet address 
 address = os.getenv('WALLET_ADDRESS')
-retrieve_user_fills(address, date)
+retrieve_user_fills(address, start_date,end_date)

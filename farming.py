@@ -22,9 +22,9 @@ def fetch_perpetual_funding_rates():
         if response.status_code == 200:
             # Request was successful, parse the response JSON
             data = response.json()
-            #print(data)
+            print(data)
             # Find the BTC data in the second part of the array
-            symbol_data = data[1][0-100]
+            symbol_data = data[1][0]
 
             # Create a dictionary to combine the data for 'BTC'
             combined_data = {

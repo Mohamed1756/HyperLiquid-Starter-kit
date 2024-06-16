@@ -64,7 +64,7 @@ def process_order_book_snapshot(snapshot_data):
 def get_user_input():
     while True:
         # Prompt the user for a coin input
-        user_input = input("Enter a coin symbol: ").strip().upper()  # Convert input to uppercase
+        user_input = input("Enter a coin symbol (Symbol-USD): ").strip().upper()  # Convert input to uppercase
 
         # Check if the user input exists in the symbol dictionary
         if user_input in [key.upper() for key in SymbolDictionary.symbols.keys()]:
